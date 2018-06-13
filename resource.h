@@ -120,6 +120,12 @@
 #define IDC_CUSTOM_EDIT                 1111
 #define IDC_RESET_VALUES                1113
 #define IDC_HIDE_FONT_PROPS             1114
+#define IDC_CHECK_AUTO_REPOSITION_ON_SIZE 1115
+#define IDC_CHECK_AUTO_REPOSITION_ON_SWITCH_PAGE 1116
+#define IDC_CHECK3                      1117
+#define IDC_CHECK_REUSE_SIZING_ROUTINE  1117
+#define IDC_MFCLINK1                    1118
+#define IDC_MFCLINK_PROJECT             1118
 #define IDC_COLORBAR                    16516
 #define IDC_COLORBAR2                   16518
 #define ID_ITEM_1                       32771
@@ -132,9 +138,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        160
+#define _APS_NEXT_RESOURCE_VALUE        162
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         1115
+#define _APS_NEXT_CONTROL_VALUE         1119
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

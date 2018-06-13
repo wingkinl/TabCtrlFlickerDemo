@@ -61,4 +61,8 @@ protected:
 		// No message handlers
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	BOOL m_bAutoRepositionOnSize;
+	BOOL m_bAutoRepositionOnSwitchPage;
+	BOOL m_bRepositionReuseSizingRoutine;
 };

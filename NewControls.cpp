@@ -25,6 +25,9 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
+	, m_bAutoRepositionOnSize(FALSE)
+	, m_bAutoRepositionOnSwitchPage(FALSE)
+	, m_bRepositionReuseSizingRoutine(FALSE)
 {
 	//{{AFX_DATA_INIT(CAboutDlg)
 	//}}AFX_DATA_INIT
@@ -34,6 +37,9 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
+	DDX_Check(pDX, IDC_CHECK_AUTO_REPOSITION_ON_SIZE, m_bAutoRepositionOnSize);
+	DDX_Check(pDX, IDC_CHECK_AUTO_REPOSITION_ON_SWITCH_PAGE, m_bAutoRepositionOnSwitchPage);
+	DDX_Check(pDX, IDC_CHECK_REUSE_SIZING_ROUTINE, m_bRepositionReuseSizingRoutine);
 	//}}AFX_DATA_MAP
 }
 

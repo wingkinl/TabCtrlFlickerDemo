@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -70,24 +68,31 @@ END
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\NewControls.ico"
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 34, 22, 217, 55
+IDD_ABOUTBOX DIALOGEX 34, 22, 241, 111
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About NewControls"
+CAPTION "About TabCtrlFlickerDemo"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "NewControls Application Version 1.0",IDC_STATIC,40,10,119,8
-    LTEXT           "© 2007 - 2008 Microsoft Corporation.  All rights reserved.",
-                    IDC_STATIC,40,25,122,19
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
+    LTEXT           "TabCtrlFlickerDemo Application Version 1.0",IDC_STATIC,40,10,119,8
+    LTEXT           "© 2007 - 2008 Microsoft Corporation.  All rights reserved.",IDC_STATIC,40,25,122,19
     DEFPUSHBUTTON   "OK",IDOK,176,6,32,14,WS_GROUP
+    CONTROL         "Auto reposition on sizing dialog",IDC_CHECK_AUTO_REPOSITION_ON_SIZE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,38,48,113,10
+    CONTROL         "Auto reposition on switch page",IDC_CHECK_AUTO_REPOSITION_ON_SWITCH_PAGE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,38,64,113,10
+    CONTROL         "Fit current page reuse sizing routine",IDC_CHECK_REUSE_SIZING_ROUTINE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,38,80,127,10
+    CONTROL         "Project",IDC_MFCLINK_PROJECT,"MfcLink",WS_TABSTOP,115,93,105,17
 END
 
-IDD_PAGE1 DIALOG  0, 0, 309, 228
+IDD_PAGE1 DIALOG 0, 0, 309, 228
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Buttons"
 FONT 8, "MS Sans Serif"
@@ -122,7 +127,7 @@ BEGIN
     PUSHBUTTON      "This is a multi-line button\nYou can add some text\nlines here...",IDC_BUTTON_MULTLINE,191,166,96,32
 END
 
-IDD_PAGE2 DIALOG  0, 0, 309, 190
+IDD_PAGE2 DIALOG 0, 0, 309, 190
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Color Controls"
 FONT 8, "MS Sans Serif"
@@ -171,7 +176,7 @@ BEGIN
     LTEXT           "Custom: ",IDC_STATIC,173,189,28,8
 END
 
-IDD_PAGE4 DIALOG  0, 0, 309, 190
+IDD_PAGE4 DIALOG 0, 0, 309, 190
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Masked Edit"
 FONT 8, "MS Sans Serif"
@@ -194,7 +199,7 @@ BEGIN
     EDITTEXT        IDC_VALUE5,142,134,94,14,ES_AUTOHSCROLL | ES_READONLY
 END
 
-IDD_PAGE5 DIALOG  0, 0, 309, 243
+IDD_PAGE5 DIALOG 0, 0, 309, 243
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "List Controls"
 FONT 8, "MS Sans Serif"
@@ -218,7 +223,7 @@ BEGIN
     CONTROL         "Hide Fon&t Properties",IDC_HIDE_FONT_PROPS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,157,226,80,10
 END
 
-IDD_PAGE6 DIALOG  0, 0, 309, 217
+IDD_PAGE6 DIALOG 0, 0, 309, 217
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Shell Controls"
 FONT 8, "MS Sans Serif"
@@ -229,7 +234,7 @@ BEGIN
     PUSHBUTTON      "Select &Folder...",IDC_SELECT_FOLDER,184,20,60,14
     LTEXT           "CMFCShellListCtrl:",IDC_STATIC,6,102,63,8
     CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,6,113,296,95
-    EDITTEXT        IDC_SELECTED_FOLDER,184,40,111,48, ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL
+    EDITTEXT        IDC_SELECTED_FOLDER,184,40,111,48,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY
 END
 
 
@@ -255,12 +260,12 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "FileDescription", "NewControls MFC Application"
+            VALUE "FileDescription", "TabCtrlFlickerDemo MFC Application"
             VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "NewControls"
+            VALUE "InternalName", "TabCtrlFlickerDemo"
             VALUE "LegalCopyright", "Copyright (C) 2000"
-            VALUE "OriginalFilename", "NewControls.EXE"
-            VALUE "ProductName", "NewControls Application"
+            VALUE "OriginalFilename", "TabCtrlFlickerDemo.EXE"
+            VALUE "ProductName", "TabCtrlFlickerDemo Application"
             VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
@@ -277,8 +282,12 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+    END
+
     IDD_PAGE1, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -365,29 +374,53 @@ END
 //
 
 IDB_BTN1                BITMAP                  "res\\btn1.bmp"
+
 IDB_BTN1_HOT            BITMAP                  "res\\btn1_hot.bmp"
+
 IDB_GLOBE               BITMAP                  "res\\globe.bmp"
+
 IDB_PLAY                BITMAP                  "res\\play.bmp"
+
 IDB_STOP                BITMAP                  "res\\stop.bmp"
+
 IDB_STOP_HOT            BITMAP                  "res\\stop_hot.bmp"
+
 IDB_PLAY_HOT            BITMAP                  "res\\play_hot.bmp"
+
 IDB_IMAGE               BITMAP                  "res\\image.bmp"
+
 IDB_TEST_BITMAP         BITMAP                  "res\\test_bit.bmp"
+
 IDR_TOOLBAR_MENU_IMAGES BITMAP                  "res\\toolbar1.bmp"
+
 IDB_ICONS               BITMAP                  "res\\icons.bmp"
+
 IDB_CHECK               BITMAP                  "res\\bitmap1.bmp"
+
 IDB_CHECKNO             BITMAP                  "res\\checkno.bmp"
+
 IDB_RADIO_ON            BITMAP                  "res\\radio_on.bmp"
+
 IDB_RADIO_OFF           BITMAP                  "res\\radio_of.bmp"
+
 IDB_PROPICONS           BITMAP                  "Res\\propicons.bmp"
+
 IDB_BUTTONS             BITMAP                  "res\\buttons.bmp"
+
 IDB_CHECK32             BITMAP                  "Res\\check32.bmp"
+
 IDB_CHECKNO32           BITMAP                  "Res\\checkno32.bmp"
+
 IDB_RADIO_OFF32         BITMAP                  "Res\\radio_of32.bmp"
+
 IDB_RADIO_ON32          BITMAP                  "Res\\radio_on32.bmp"
+
 IDB_BTN1_HOT_32         BITMAP                  "Res\\button32hot.bmp"
+
 IDB_BTN1_32             BITMAP                  "Res\\button32.bmp"
+
 IDB_ICONS32             BITMAP                  "Res\\icons32.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -396,12 +429,13 @@ IDB_ICONS32             BITMAP                  "Res\\icons32.bmp"
 
 IDC_CURSOR              CURSOR                  "res\\Btn.cur"
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
 
-IDR_MENU1 MENU 
+IDR_MENU1 MENU
 BEGIN
     POPUP "Dummy"
     BEGIN
@@ -412,7 +446,7 @@ BEGIN
     END
 END
 
-IDR_DIALOG_MENU MENU 
+IDR_DIALOG_MENU MENU
 BEGIN
     POPUP "Dummy"
     BEGIN
@@ -459,13 +493,31 @@ BEGIN
     0
 END
 
+IDD_ABOUTBOX DLGINIT
+BEGIN
+    IDC_MFCLINK_PROJECT, 0x37c, 203, 0
+0x4d3c, 0x4346, 0x694c, 0x6b6e, 0x555f, 0x6c72, 0x683e, 0x7474, 0x7370, 
+0x2f3a, 0x672f, 0x7469, 0x7568, 0x2e62, 0x6f63, 0x2f6d, 0x6977, 0x676e, 
+0x696b, 0x6c6e, 0x542f, 0x6261, 0x7443, 0x6c72, 0x6c46, 0x6369, 0x656b, 
+0x4472, 0x6d65, 0x3c6f, 0x4d2f, 0x4346, 0x694c, 0x6b6e, 0x555f, 0x6c72, 
+0x3c3e, 0x464d, 0x4c43, 0x6e69, 0x5f6b, 0x7255, 0x506c, 0x6572, 0x6966, 
+0x3e78, 0x2f3c, 0x464d, 0x4c43, 0x6e69, 0x5f6b, 0x7255, 0x506c, 0x6572, 
+0x6966, 0x3e78, 0x4d3c, 0x4346, 0x694c, 0x6b6e, 0x545f, 0x6f6f, 0x746c, 
+0x7069, 0x3c3e, 0x4d2f, 0x4346, 0x694c, 0x6b6e, 0x545f, 0x6f6f, 0x746c, 
+0x7069, 0x3c3e, 0x464d, 0x4c43, 0x6e69, 0x5f6b, 0x7546, 0x6c6c, 0x6554, 
+0x7478, 0x6f54, 0x6c6f, 0x6974, 0x3e70, 0x4146, 0x534c, 0x3c45, 0x4d2f, 
+0x4346, 0x694c, 0x6b6e, 0x465f, 0x6c75, 0x546c, 0x7865, 0x5474, 0x6f6f, 
+0x746c, 0x7069, "\076" 
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_TOOLBAR_MENU_IMAGES TOOLBAR  16, 15
+IDR_TOOLBAR_MENU_IMAGES TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_DIALOG_ABOUT
     BUTTON      ID_ITEM_1
@@ -474,21 +526,32 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_ABOUTBOX            "&About NewControls..."
-    IDS_CAPTION             "NewControls"
+    IDS_ABOUTBOX            "&About TabCtrlFlickerDemo..."
+    IDS_CAPTION             "TabCtrlFlickerDemo"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    AFX_IDS_APP_TITLE       "NewControls Example"
+    AFX_IDS_APP_TITLE       "TabCtrlFlickerDemo Example"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -516,5 +579,4 @@ LANGUAGE 9, 1
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-
 

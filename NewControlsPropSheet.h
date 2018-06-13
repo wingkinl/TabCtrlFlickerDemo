@@ -42,13 +42,30 @@ public:
 public:
 	virtual BOOL OnInitDialog();
 
+	void OnActivatePage(CPropertyPage* pPage) override;
+
+	void RepositionControls(CSize szDiff);
+	void ResizeToFitPage(CPropertyPage* pPage);
+	CSize CalcPageCompactSize(CPropertyPage* pPage) const;
+
 // Implementation
 public:
 	virtual ~NewControlsPropSheet();
+protected:
+	CSize m_szClient;
+	CRect m_TabMargin;
+
+	BOOL m_bAutoRepositionOnSize;
+	BOOL m_bAutoRepositionOnSwitchPage;
+	BOOL m_bRepositionReuseSizingRoutine;
 
 protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg LRESULT OnCommandResizeToFitCurrentPage(WPARAM wp, LPARAM lp);
+	afx_msg LRESULT OnResizeToFitCurrentPage(WPARAM wp, LPARAM lp);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 	DECLARE_MESSAGE_MAP()
 };
