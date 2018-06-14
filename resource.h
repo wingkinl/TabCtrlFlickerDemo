@@ -126,6 +126,8 @@
 #define IDC_CHECK_REUSE_SIZING_ROUTINE  1117
 #define IDC_MFCLINK1                    1118
 #define IDC_MFCLINK_PROJECT             1118
+#define IDC_CHECK1                      1119
+#define IDC_CHECK_DELAY_SIZING          1119
 #define IDC_COLORBAR                    16516
 #define IDC_COLORBAR2                   16518
 #define ID_ITEM_1                       32771
@@ -140,7 +142,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        162
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         1119
+#define _APS_NEXT_CONTROL_VALUE         1120
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

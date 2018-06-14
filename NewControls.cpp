@@ -24,10 +24,8 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
-	, m_bAutoRepositionOnSize(FALSE)
-	, m_bAutoRepositionOnSwitchPage(FALSE)
-	, m_bRepositionReuseSizingRoutine(FALSE)
+CAboutDlg::CAboutDlg(NewControlsPropSheet* pSheet) : CDialog(CAboutDlg::IDD)
+	, m_pSheet(pSheet)
 {
 	//{{AFX_DATA_INIT(CAboutDlg)
 	//}}AFX_DATA_INIT
@@ -37,9 +35,10 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
-	DDX_Check(pDX, IDC_CHECK_AUTO_REPOSITION_ON_SIZE, m_bAutoRepositionOnSize);
-	DDX_Check(pDX, IDC_CHECK_AUTO_REPOSITION_ON_SWITCH_PAGE, m_bAutoRepositionOnSwitchPage);
-	DDX_Check(pDX, IDC_CHECK_REUSE_SIZING_ROUTINE, m_bRepositionReuseSizingRoutine);
+	DDX_Check(pDX, IDC_CHECK_AUTO_REPOSITION_ON_SIZE, m_pSheet->m_bAutoRepositionOnSize);
+	DDX_Check(pDX, IDC_CHECK_AUTO_REPOSITION_ON_SWITCH_PAGE, m_pSheet->m_bAutoRepositionOnSwitchPage);
+	DDX_Check(pDX, IDC_CHECK_REUSE_SIZING_ROUTINE, m_pSheet->m_bRepositionReuseSizingRoutine);
+	DDX_Check(pDX, IDC_CHECK_DELAY_SIZING, m_pSheet->m_bDelayRepositionOnSwitchPage);
 	//}}AFX_DATA_MAP
 }
 

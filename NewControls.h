@@ -35,6 +35,7 @@ public:
 
 extern CNewControlsApp theApp;
 
+class NewControlsPropSheet;
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
@@ -42,7 +43,7 @@ extern CNewControlsApp theApp;
 class CAboutDlg : public CDialog
 {
 public:
-	CAboutDlg();
+	CAboutDlg(NewControlsPropSheet* pSheet);
 
 // Dialog Data
 	//{{AFX_DATA(CAboutDlg)
@@ -62,7 +63,5 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 public:
-	BOOL m_bAutoRepositionOnSize;
-	BOOL m_bAutoRepositionOnSwitchPage;
-	BOOL m_bRepositionReuseSizingRoutine;
+	NewControlsPropSheet* m_pSheet;
 };

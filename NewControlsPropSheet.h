@@ -44,7 +44,7 @@ public:
 
 	void OnActivatePage(CPropertyPage* pPage) override;
 
-	void RepositionControls(CSize szDiff);
+	void RepositionControls(CPropertyPage* pPage, CSize szDiff, CSize* pszPage = nullptr);
 	void ResizeToFitPage(CPropertyPage* pPage);
 	CSize CalcPageCompactSize(CPropertyPage* pPage) const;
 
@@ -55,10 +55,15 @@ protected:
 	CSize m_szClient;
 	CRect m_TabMargin;
 
+	CPropertyPage* m_pResizePage;
+	CSize m_szPage;
+
+	friend class CAboutDlg;
 	BOOL m_bAutoRepositionOnSize;
 	BOOL m_bAutoRepositionOnSwitchPage;
+	BOOL m_bDelayRepositionOnSwitchPage;
 	BOOL m_bRepositionReuseSizingRoutine;
-
+	UINT_PTR m_nTimerDelayReposition;
 protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
@@ -66,6 +71,7 @@ protected:
 	afx_msg LRESULT OnCommandResizeToFitCurrentPage(WPARAM wp, LPARAM lp);
 	afx_msg LRESULT OnResizeToFitCurrentPage(WPARAM wp, LPARAM lp);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 	DECLARE_MESSAGE_MAP()
 };

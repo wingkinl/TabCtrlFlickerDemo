@@ -70,6 +70,7 @@
     <ProjectGUID>{491D63E1-0D49-4470-A1E1-AF28BBDA09F8}</ProjectGUID>
     <RootNamespace>NewControls</RootNamespace>
     <Keyword>MFCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -837,6 +838,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CDemoPropertyPage.cpp" />
     <ClCompile Include="CustomProperties.cpp" />
     <ClCompile Include="NewControls.cpp" />
     <ClCompile Include="NewControlsPropSheet.cpp" />
@@ -866,6 +868,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CDemoPropertyPage.h" />
     <ClInclude Include="CustomProperties.h" />
     <ClInclude Include="NewControls.h" />
     <ClInclude Include="NewControlsPropSheet.h" />

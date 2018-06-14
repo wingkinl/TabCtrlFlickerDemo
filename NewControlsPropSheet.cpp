@@ -46,7 +46,11 @@ NewControlsPropSheet::NewControlsPropSheet(CWnd* pParentWnd)
 	m_szClient = CSize(0, 0);
 	m_bAutoRepositionOnSize = FALSE;
 	m_bAutoRepositionOnSwitchPage = FALSE;
+	m_bDelayRepositionOnSwitchPage = FALSE;
 	m_bRepositionReuseSizingRoutine = FALSE;
+	m_nTimerDelayReposition = 0;
+	m_szPage = CSize(0, 0);
+	m_pResizePage = nullptr;
 }
 
 NewControlsPropSheet::~NewControlsPropSheet()
@@ -54,6 +58,7 @@ NewControlsPropSheet::~NewControlsPropSheet()
 }
 
 #define WM_APP_RESIZE_TO_FIT_PAGE		(WM_APP+0x100)
+#define TIMERID_DELAYED_SIZING			0x9999
 
 BEGIN_MESSAGE_MAP(NewControlsPropSheet, CMFCPropertySheet)
 	ON_WM_QUERYDRAGICON()
@@ -61,6 +66,7 @@ BEGIN_MESSAGE_MAP(NewControlsPropSheet, CMFCPropertySheet)
 	ON_MESSAGE(WM_COMMANDHELP, &NewControlsPropSheet::OnCommandResizeToFitCurrentPage)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
+	ON_WM_TIMER()
 	ON_MESSAGE(WM_APP_RESIZE_TO_FIT_PAGE, &NewControlsPropSheet::OnResizeToFitCurrentPage)
 END_MESSAGE_MAP()
 
@@ -126,14 +132,8 @@ void NewControlsPropSheet::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
-		CAboutDlg aboutDlg;
-		aboutDlg.m_bAutoRepositionOnSize = m_bAutoRepositionOnSize;
-		aboutDlg.m_bAutoRepositionOnSwitchPage = m_bAutoRepositionOnSwitchPage;
-		aboutDlg.m_bRepositionReuseSizingRoutine = m_bRepositionReuseSizingRoutine;
+		CAboutDlg aboutDlg(this);
 		aboutDlg.DoModal();
-		m_bAutoRepositionOnSize = aboutDlg.m_bAutoRepositionOnSize;
-		m_bAutoRepositionOnSwitchPage = aboutDlg.m_bAutoRepositionOnSwitchPage;
-		m_bRepositionReuseSizingRoutine = aboutDlg.m_bRepositionReuseSizingRoutine;
 	}
 	else
 	{
@@ -244,7 +244,11 @@ void NewControlsPropSheet::ResizeToFitPage(CPropertyPage* pPage)
 	if (m_bRepositionReuseSizingRoutine)
 	{
 		AdjustWindowRect(&rectDlg, GetStyle(), FALSE);
+		m_szPage = szPage;
+		m_pResizePage = pPage;
 		SetWindowPos(nullptr, -1, -1, rectDlg.Width(), rectDlg.Height(), nFlags);
+		m_pResizePage = nullptr;
+		m_szPage = CSize(0, 0);
 	}
 	else
 	{
@@ -253,7 +257,7 @@ void NewControlsPropSheet::ResizeToFitPage(CPropertyPage* pPage)
 		CRect rectDlgCur;
 		GetWindowRect(rectDlgCur);
 		CSize szDiff = rectDlg.Size() - rectDlgCur.Size();
-		RepositionControls(szDiff);
+		RepositionControls(pPage, szDiff, &szPage);
 
 		BOOL bOldAutoSize = m_bAutoRepositionOnSize;
 		m_bAutoRepositionOnSize = FALSE;
@@ -273,12 +277,28 @@ void NewControlsPropSheet::OnActivatePage(CPropertyPage* pPage)
 	CMFCPropertySheet::OnActivatePage(pPage);
 	if (m_bAutoRepositionOnSwitchPage)
 	{
-		BOOL m_bDelayReposition = FALSE;
-		if (m_bDelayReposition)
-			PostMessage(WM_APP_RESIZE_TO_FIT_PAGE);
+		if (m_bDelayRepositionOnSwitchPage)
+		{
+			// use low priority WM_TIMER
+			m_nTimerDelayReposition = SetTimer(TIMERID_DELAYED_SIZING, 10, nullptr);
+			//PostMessage(WM_APP_RESIZE_TO_FIT_PAGE);
+		}
 		else
+		{
 			ResizeToFitPage(pPage);
+		}
 	}
+}
+
+void NewControlsPropSheet::OnTimer(UINT_PTR nIDEvent)
+{
+	if (nIDEvent == m_nTimerDelayReposition)
+	{
+		KillTimer(m_nTimerDelayReposition);
+		m_nTimerDelayReposition = 0;
+		ResizeToFitPage(GetActivePage());
+	}
+	CMFCPropertySheet::OnTimer(nIDEvent);
 }
 
 LRESULT NewControlsPropSheet::OnCommandResizeToFitCurrentPage(WPARAM, LPARAM)
@@ -305,12 +325,15 @@ LRESULT NewControlsPropSheet::OnResizeToFitCurrentPage(WPARAM, LPARAM)
 	return 0;
 }
 
-void NewControlsPropSheet::RepositionControls(CSize szDiff)
+void NewControlsPropSheet::RepositionControls(CPropertyPage* pPage, CSize szDiff, CSize* pszPage)
 {
 	HDWP hDWP = BeginDeferWindowPos(5);
 
 	TryDeferWindowPos(hDWP, GetTabControl(), this, szDiff, TRUE);
-	TryDeferWindowPos(hDWP, GetActivePage(), this, szDiff, TRUE);
+	if (pszPage)
+		TryDeferWindowPos(hDWP, pPage, -1,-1, pszPage->cx, pszPage->cy, SWP_NOACTIVATE|SWP_NOZORDER|SWP_NOMOVE);
+	else
+		TryDeferWindowPos(hDWP, pPage, this, szDiff, TRUE);
 	TryDeferWindowPos(hDWP, GetDlgItem(IDOK), this, szDiff, FALSE);
 	TryDeferWindowPos(hDWP, GetDlgItem(IDCANCEL), this, szDiff, FALSE);
 	TryDeferWindowPos(hDWP, GetDlgItem(ID_APPLY_NOW), this, szDiff, FALSE);
@@ -327,9 +350,12 @@ void NewControlsPropSheet::OnSize(UINT nType, int cx, int cy)
 		return;
 	CSize szDiff = CSize(cx, cy) - m_szClient;
 	
-	RepositionControls(szDiff);
+	CSize* pszPage = m_szPage.cx != 0 ? &m_szPage : nullptr;
+	auto pPage = m_pResizePage ? m_pResizePage : GetActivePage();
+	RepositionControls(pPage, szDiff, pszPage);
 
 	CRect rectClient;
 	GetClientRect(rectClient);
 	m_szClient = rectClient.Size();
 }
+

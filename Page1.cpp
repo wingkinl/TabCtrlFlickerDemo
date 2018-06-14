@@ -315,7 +315,7 @@ void CPage1::OnButtonMenu()
 
 void CPage1::OnDialogAbout()
 {
-	CAboutDlg aboutDlg;
+	CAboutDlg aboutDlg((NewControlsPropSheet*)GetParentSheet());
 	aboutDlg.DoModal();
 }
 
