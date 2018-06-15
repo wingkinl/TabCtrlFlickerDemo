@@ -200,10 +200,7 @@ inline void TryDeferWindowPos(HDWP& hDWP, CWnd* pWnd, int x, int y, int cx, int 
 
 inline void TryDeferWindowPos(HDWP& hDWP, CWnd* pWnd, const CRect& rect, UINT nFlags)
 {
-	if (hDWP)
-		hDWP = DeferWindowPos(hDWP, pWnd->GetSafeHwnd(), nullptr, rect.left, rect.top, rect.Width(), rect.Height(), nFlags);
-	else
-		pWnd->SetWindowPos(nullptr, rect.left, rect.top, rect.Width(), rect.Height(), nFlags);
+	TryDeferWindowPos(hDWP, pWnd, rect.left, rect.top, rect.Width(), rect.Height(), nFlags);
 }
 
 void TryDeferWindowPos(HDWP& hDWP, CWnd* pWnd, CWnd* pParent, CSize szDiff, BOOL bResize)
